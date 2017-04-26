@@ -34,36 +34,13 @@ const Scroll = {
 			if($('tr', _tbody).length == 0){
 				return true;
 			}
-			//配置吸顶区的宽度
-			if(_setTopHead.length == 0 || _isWindowResize_){
-				_setTopHead.length == 0 ? table.append(_thead.clone(true).addClass('set-top')) : '';
-				_setTopHead = $('.set-top', table);
-				_setTopHead.removeAttr('grid-manager-thead');
-				_setTopHead.removeClass('scrolling');
-				_setTopHead.css({
-					width : _thead.width()
-					,left: table.css('border-left-width') + 'px'
-				});
-				// 防止window.resize事件后导致的吸顶宽度错误. 可以优化
-				$.each($('th', _thead), function (i, v) {
-					$('th', _setTopHead).eq(i).width($(v).width());
-				});
+			if(!document.querySelector('.abc')){
+				let scrollingTable = document.createElement('table');
+				scrollingTable.className = 'abc'
+				scrollingTable.appendChild(_thead.clone(true).addClass('set-top').get(0));
+				_tableWarp.append(scrollingTable)
 			}
-			if(_setTopHead.length === 0){
-				return;
-			}
-			// 删除表头置顶
-			if(_scrollDOMTop === 0){
-				_thead.removeClass('scrolling');
-				_setTopHead.remove();
-			}
-			// 显示表头置顶
-			else {
-				_thead.addClass('scrolling');
-				_setTopHead.css({
-					top: _scrollDOMTop
-				});
-			}
+			// TODO 可以尝试着将原来的 table-div 当作 gm-body; 并增加一个新的div gm-thead 用于存放thead. 以达到将head body分开 用来解决吸顶问题
 			return true;
 		});
 	}

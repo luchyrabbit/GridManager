@@ -3060,9 +3060,13 @@
 				if ((0, _jTool2.default)('tr', _tbody).length == 0) {
 					return true;
 				}
+				var scrollingTable = document.createElement('table');
+				scrollingTable.addChild(_thead.clone(true).addClass('set-top').get(0));
+				console.log(scrollingTable);
+				return;
 				//配置吸顶区的宽度
 				if (_setTopHead.length == 0 || _isWindowResize_) {
-					_setTopHead.length == 0 ? table.append(_thead.clone(true).addClass('set-top')) : '';
+					_setTopHead.length == 0 ? _tableDIV.append(scrollingTable) : '';
 					_setTopHead = (0, _jTool2.default)('.set-top', table);
 					_setTopHead.removeAttr('grid-manager-thead');
 					_setTopHead.removeClass('scrolling');
@@ -3070,14 +3074,12 @@
 						width: _thead.width(),
 						left: table.css('border-left-width') + 'px'
 					});
-					// 防止window.resize事件后导致的吸顶宽度错误. 可以优化
-					_jTool2.default.each((0, _jTool2.default)('th', _thead), function (i, v) {
-						(0, _jTool2.default)('th', _setTopHead).eq(i).width((0, _jTool2.default)(v).width());
-					});
+					console.log(scrollingTable);
 				}
 				if (_setTopHead.length === 0) {
 					return;
 				}
+				return;
 				// 删除表头置顶
 				if (_scrollDOMTop === 0) {
 					_thead.removeClass('scrolling');
@@ -3086,9 +3088,9 @@
 				// 显示表头置顶
 				else {
 						_thead.addClass('scrolling');
-						_setTopHead.css({
-							top: _scrollDOMTop
-						});
+						// _setTopHead.css({
+						// 	top: _scrollDOMTop
+						// });
 					}
 				return true;
 			});
